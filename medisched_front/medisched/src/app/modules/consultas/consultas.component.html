@@ -1,0 +1,46 @@
+<div class="consultas">
+  <h2>Gerenciar Consultas</h2>
+
+  <form (ngSubmit)="criarConsulta()">
+    <label for="paciente">Paciente</label>
+    <select id="paciente" [formControl]="pacienteControl" required>
+      <option *ngFor="let paciente of pacientes" [value]="paciente.id">
+        {{ paciente.nome }}
+      </option>
+    </select>
+
+    <label for="medico">Médico</label>
+    <select id="medico" [formControl]="medicoControl" required>
+      <option *ngFor="let medico of medicos" [value]="medico.id">
+        {{ medico.nome }}
+      </option>
+    </select>
+
+    <label for="data_horario">Data e Horário</label>
+    <input
+      id="data_horario"
+      type="datetime-local"
+      [formControl]="dataHorarioControl"
+      required
+    />
+
+    <button (click)="criarConsulta()">Criar Consulta</button>
+  </form>
+
+  <h3>Consultas</h3>
+  <ul>
+    <li *ngFor="let consulta of consultas">
+      {{ consulta.paciente }} - {{ consulta.medico }} - {{ consulta.data_hora | date: 'short' }}
+      <button (click)="exibirDetalhes(consulta.id)">Ver Detalhes</button>
+      <button (click)="editarConsulta(consulta.id)">Editar</button>
+      <button (click)="excluirConsulta(consulta.id)">Excluir</button>
+    </li>
+  </ul>
+
+  <div *ngIf="consultaDetalhe">
+    <h4>Detalhes da Consulta</h4>
+    <p><strong>Paciente:</strong> {{ consultaDetalhe.paciente }}</p>
+    <p><strong>Médico:</strong> {{ consultaDetalhe.medico }}</p>
+    <p><strong>Data e Hora:</strong> {{ consultaDetalhe.data_hora | date: 'short' }}</p>
+  </div>
+</div>

@@ -1,0 +1,52 @@
+<!-- Formulário para adicionar um novo médico -->
+<form [formGroup]="medicoForm" (ngSubmit)="saveMedico()">
+  <label for="nome">Nome</label>
+  <input id="nome" type="text" formControlName="nome" />
+
+  <label for="crm">CRM</label>
+  <input id="crm" type="text" formControlName="crm" />
+
+  <label for="especialidade">Especialidade</label>
+  <select id="especialidade" formControlName="especialidade">
+    <option *ngFor="let especialidade of especialidades" [value]="especialidade.id">
+      {{ especialidade.nome }}
+    </option>
+  </select>
+
+  <button type="button" (click)="addHorario()">Adicionar Horário</button>
+
+  <div formArrayName="horarios_disponiveis">
+    <div *ngFor="let horario of horarios_disponiveis.controls; let i = index">
+      <input type="text" [formControlName]="i" placeholder="Ex: 08:00 - 12:00" />
+      <button type="button" (click)="removeHorario(i)">Remover</button>
+    </div>
+  </div>
+  
+  <button type="submit">{{ isEditing ? 'Atualizar Médico' : 'Salvar Médico' }}</button>
+</form>
+
+<!-- Exibir lista de médicos cadastrados -->
+<h3>Médicos Cadastrados</h3>
+<ul>
+  <li *ngFor="let medico of medicos">
+    {{ medico.nome }} - CRM: {{ medico.crm }}
+    <button type="button" (click)="viewMedicoDetails(medico.id)">Ver Detalhes</button>
+    <button type="button" (click)="editMedico(medico.id)">Editar</button>
+    <button type="button" (click)="deleteMedico(medico.id)">Deletar</button>
+  </li>
+</ul>
+
+<!-- Exibir detalhes do médico -->
+<div *ngIf="medicoDetalhes">
+  <h3>Detalhes do Médico</h3>
+  <p><strong>Nome:</strong> {{ medicoDetalhes.nome }}</p>
+  <p><strong>CRM:</strong> {{ medicoDetalhes.crm }}</p>
+  <p><strong>Especialidade:</strong> {{ medicoDetalhes.especialidade.nome }}</p>
+  <p><strong>Horários Disponíveis:</strong></p>
+  <ul>
+    <li *ngFor="let horario of medicoDetalhes.horarios_disponiveis">
+      {{ horario }}
+    </li>
+  </ul>
+  <button type="button" (click)="fecharDetalhes()">Fechar</button>
+</div>

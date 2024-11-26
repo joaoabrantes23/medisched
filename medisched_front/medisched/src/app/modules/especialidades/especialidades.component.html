@@ -1,0 +1,27 @@
+<h2>Especialidades</h2>
+<ul>
+  <li *ngFor="let especialidade of especialidades">
+    {{ especialidade.nome }}
+    <button (click)="editarEspecialidade(especialidade)">Editar</button>
+    <button (click)="deletarEspecialidade(especialidade.id)">Deletar</button>
+  </li>
+</ul>
+
+<!-- Formulário para criar ou editar -->
+<div>
+  <input
+    type="text"
+    [formControl]="novaEspecialidade"
+    placeholder="Nome da especialidade"
+  />
+  <button (click)="salvarEspecialidade()">
+    {{ especialidadeSelecionada ? 'Atualizar' : 'Criar' }}
+  </button>
+  <button
+    *ngIf="especialidadeSelecionada"
+    type="button"
+    (click)="cancelarEdicao()"
+  >
+    Cancelar
+  </button>
+</div>

@@ -1,0 +1,59 @@
+<h2>Pacientes</h2>
+<ul>
+  <li *ngFor="let paciente of pacientes">
+    {{ paciente.nome }} - {{ paciente.cpf }} - {{ paciente.telefone }}
+    <button (click)="editarPaciente(paciente)">Editar</button>
+    <button (click)="deletarPaciente(paciente.id)">Deletar</button>
+    <button (click)="mostrarDetalhes(paciente)">Mostrar Detalhes</button>
+  </li>
+</ul>
+
+<!-- Modal ou Seção de Detalhes -->
+<div *ngIf="pacienteSelecionado" class="detalhes-paciente">
+  <h3>Detalhes do Paciente</h3>
+  <p><strong>Nome:</strong> {{ pacienteSelecionado.nome }}</p>
+  <p><strong>CPF:</strong> {{ pacienteSelecionado.cpf }}</p>
+  <p><strong>Data de Nascimento:</strong> {{ pacienteSelecionado.data_nascimento | date: 'dd/MM/yyyy' }}</p>
+  <p><strong>Contato:</strong> {{ pacienteSelecionado.contato }}</p>
+  <p><strong>Endereço:</strong> {{ pacienteSelecionado.endereco }}</p>
+  <p><strong>Histórico Médico:</strong> {{ pacienteSelecionado.historico_medico }}</p>
+  <button (click)="fecharDetalhes()">Fechar</button>
+</div>
+
+<h3>{{ pacienteForm.value.id ? 'Editar Paciente' : 'Criar Paciente' }}</h3>
+<form [formGroup]="pacienteForm">
+  <div>
+    <label for="nome">Nome:</label>
+    <input id="nome" type="text" formControlName="nome" placeholder="Nome do paciente" />
+  </div>
+
+  <div>
+    <label for="cpf">CPF:</label>
+    <input id="cpf" type="text" formControlName="cpf" placeholder="CPF" />
+  </div>
+
+  <div>
+    <label for="data_nascimento">Data de Nascimento:</label>
+    <input id="data_nascimento" type="date" formControlName="data_nascimento" placeholder="Data de Nascimento" />
+  </div>
+
+  <div>
+    <label for="contato">Contato:</label>
+    <input id="contato" type="text" formControlName="contato" placeholder="Contato" />
+  </div>
+
+  <div>
+    <label for="endereco">Endereço:</label>
+    <textarea id="endereco" formControlName="endereco" placeholder="Endereço"></textarea>
+  </div>
+
+  <div>
+    <label for="historico_medico">Histórico Médico:</label>
+    <textarea id="historico_medico" formControlName="historico_medico" placeholder="Histórico Médico"></textarea>
+  </div>
+
+  <button type="button" (click)="criarPaciente()">
+    {{ pacienteForm.value.id ? 'Atualizar' : 'Criar' }}
+  </button>
+  <button type="button" (click)="resetForm()">Cancelar</button>
+</form>
